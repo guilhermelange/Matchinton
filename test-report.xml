@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="C:\Users\guilu\OneDrive\Área de Trabalho\matchinton\matchinton\src\models\user\user.service.spec.ts">
+    <testCase name="UserService should be defined" duration="18"/>
+  </file>
+  <file path="C:\Users\guilu\OneDrive\Área de Trabalho\matchinton\matchinton\src\models\user\user.controller.spec.ts">
+    <testCase name="UserController should be defined" duration="17"/>
+  </file>
+</testExecutions>
