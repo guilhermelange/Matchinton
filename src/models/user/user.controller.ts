@@ -2,7 +2,7 @@ import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Public } from 'src/common/decorator/publicDecorator';
+import { Public } from '../../common/decorator/publicDecorator';
 
 @Controller('user')
 export class UserController {
