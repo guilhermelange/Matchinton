@@ -54,6 +54,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "29.3.1",
+    "jest-sonar-reporter": "^2.0.0",
     "prettier": "^2.3.2",
     "prisma": "^4.13.0",
     "source-map-support": "^0.5.20",
@@ -78,8 +79,14 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
+    "collectCoverage": true,
+    "testResultsProcessor": "jest-sonar-reporter",
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ]
   },
   "prisma": {
     "schema": "src/database/schema.prisma"
