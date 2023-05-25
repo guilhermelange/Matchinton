@@ -1,7 +1,7 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { CreateCompetitionDto } from './dto/create-competition.dto';
 import { UpdateCompetitionDto } from './dto/update-competition.dto';
-import { PrismaService } from 'src/database/prisma';
+import { PrismaService } from '../../database/prisma';
 
 @Injectable()
 export class CompetitionService {

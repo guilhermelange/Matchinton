@@ -1,4 +1,4 @@
-import { User, UserType } from 'src/database/prisma';
+import { User, UserType } from '../../../database/prisma';
 
 export class UserPrisma implements User {
   name: string;
