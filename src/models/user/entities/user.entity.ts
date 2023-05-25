@@ -8,7 +8,7 @@ export class UserPrisma implements User {
   type: UserType;
   created_at: Date;
   updated_at: Date;
-  id: number;
+  id: bigint;
 }
 
 export class UserDTO {

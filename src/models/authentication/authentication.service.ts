@@ -29,7 +29,10 @@ export class AuthenticationService {
       throw new UnauthorizedException('Dados inválidos!');
     }
 
-    const payload = { username: user.name, sub: user.id };
+    const payload = {
+      username: user.name,
+      sub: { id: user.id, role: user.type },
+    };
     const token = this.jwtService.sign(payload);
 
     user.password = undefined;
