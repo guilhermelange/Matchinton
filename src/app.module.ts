@@ -5,7 +5,9 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthenticationModule } from './models/authentication/authentication.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './models/authentication/jwt-auth.guard';
-
+import { CategoryModule } from './models/category/category.module';
+import { CompetitionModule } from './models/competition/competition.module';
+import patch from './common/patch';
 @Module({
   imports: [
     ThrottlerModule.forRoot({
@@ -15,6 +17,8 @@ import { JwtAuthGuard } from './models/authentication/jwt-auth.guard';
     PrismaModule,
     UserModule,
     AuthenticationModule,
+    CategoryModule,
+    CompetitionModule,
   ],
   controllers: [],
   providers: [
@@ -28,4 +32,8 @@ import { JwtAuthGuard } from './models/authentication/jwt-auth.guard';
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    patch();
+  }
+}

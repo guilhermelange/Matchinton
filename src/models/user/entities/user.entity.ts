@@ -1,4 +1,4 @@
-import { User, UserType } from 'src/database/prisma';
+import { User, UserType } from '../../../database/prisma';
 
 export class UserPrisma implements User {
   name: string;
@@ -8,7 +8,7 @@ export class UserPrisma implements User {
   type: UserType;
   created_at: Date;
   updated_at: Date;
-  id: number;
+  id: bigint;
 }
 
 export class UserDTO {

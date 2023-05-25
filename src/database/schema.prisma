@@ -9,18 +9,103 @@ datasource db {
 }
 
 model User {
-  id                    Int                   @default(autoincrement()) @id
-  name                  String                @db.VarChar
-  username              String                @db.VarChar
-  password              String                @db.VarChar
-  phone                 String                @db.VarChar
-  type                  UserType              @default(USER)
-  created_at            DateTime              @default(now()) @db.Timestamp(6)
-  updated_at            DateTime              @default(now()) @db.Timestamp(6)
+  id                     BigInt                   @id @default(autoincrement())
+  name                   String
+  username               String
+  password               String
+  phone                  String
+  type                   UserType                 @default(USER)
+  created_at             DateTime                 @default(now()) @db.Timestamp(6)
+  updated_at             DateTime                 @default(now()) @db.Timestamp(6)
+  duo_request_candidates duo_request_candidates[]
+  team                   team[]
+  user_team              user_team[]
+
   @@map("user")
+}
+
+model category {
+  id                   BigInt                 @id @default(autoincrement())
+  name                 String
+  max_age              Int
+  competition_category competition_category[]
+}
+
+model competition {
+  id                   BigInt                 @id @default(autoincrement())
+  name                 String
+  start_date           DateTime               @db.Date
+  end_date             DateTime               @db.Date
+  competition_category competition_category[]
+}
+
+model competition_category {
+  id             BigInt                 @id @default(autoincrement())
+  category_id    BigInt
+  competition_id BigInt
+  category       category    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  competition    competition @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model duo_request {
+  id                     BigInt                   @id @default(autoincrement())
+  player1                BigInt
+  player2                BigInt
+  category_id            BigInt
+  competition_id         BigInt
+  status                 Int
+  type                   requesttype
+  duo_request_candidates duo_request_candidates[]
+}
+
+model duo_request_candidates {
+  request_id  BigInt
+  user_id     BigInt
+  duo_request duo_request @relation(fields: [request_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user        User        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([request_id, user_id])
+}
+
+model player {
+  id          BigInt   @id @default(autoincrement())
+  name        String
+  observation String
+  birth_date  DateTime @db.Date
+  photo       String
+  city        String
+  state       String
+  team_id     BigInt
+  created_at  DateTime @default(now()) @db.Timestamp(6)
+  updated_at  DateTime @default(now()) @db.Timestamp(6)
+  team        team     @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model team {
+  id        BigInt      @id @default(autoincrement())
+  name      String
+  user_id   BigInt
+  player    player[]
+  user      User        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_team user_team[]
+}
+
+model user_team {
+  user_id BigInt
+  team_id BigInt
+  team    team   @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user    User   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([user_id, team_id])
 }
 
 enum UserType {
   USER
   ADMIN
+}
+
+enum requesttype {
+  MAS
+  FEM
+  MIS
 }
