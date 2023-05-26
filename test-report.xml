@@ -4,6 +4,6 @@
     <testCase name="UserService should be defined" duration="19"/>
   </file>
   <file path="C:\Users\guilu\OneDrive\Área de Trabalho\matchinton\matchinton\src\models\user\user.controller.spec.ts">
-    <testCase name="UserController should be defined" duration="18"/>
+    <testCase name="UserController should be defined" duration="17"/>
   </file>
 </testExecutions>

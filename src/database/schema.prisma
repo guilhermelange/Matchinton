@@ -43,8 +43,8 @@ model competition_category {
   id             BigInt                 @id @default(autoincrement())
   category_id    BigInt
   competition_id BigInt
-  category       category    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  competition    competition @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  category       category    @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  competition    competition @relation(fields: [competition_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model duo_request {
