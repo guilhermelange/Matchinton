@@ -7,6 +7,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './models/authentication/jwt-auth.guard';
 import { CategoryModule } from './models/category/category.module';
 import { CompetitionModule } from './models/competition/competition.module';
+import { TeamModule } from './models/team/team.module';
+import { PlayerModule } from './models/player/player.module';
 import patch from './common/patch';
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import patch from './common/patch';
     AuthenticationModule,
     CategoryModule,
     CompetitionModule,
+    TeamModule,
+    PlayerModule,
   ],
   controllers: [],
   providers: [

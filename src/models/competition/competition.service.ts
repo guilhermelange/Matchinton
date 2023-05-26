@@ -23,7 +23,7 @@ export class CompetitionService {
       name: createCompetitionDto.name,
       start_date: new Date(createCompetitionDto.start_date),
       competition_category: {
-        create: createCompetitionDto.competition_category.map((item) => {
+        create: createCompetitionDto.categories.map((item) => {
           return { category_id: item };
         }),
       },
