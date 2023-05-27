@@ -14,11 +14,11 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { AdminGuard } from 'src/common/guard/admin.guard';
 
 @Controller('category')
-@UseGuards(AdminGuard)
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
+  @UseGuards(AdminGuard)
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
   }
@@ -34,6 +34,7 @@ export class CategoryController {
   }
 
   @Patch(':id')
+  @UseGuards(AdminGuard)
   update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -42,6 +43,7 @@ export class CategoryController {
   }
 
   @Delete(':id')
+  @UseGuards(AdminGuard)
   remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);
   }
