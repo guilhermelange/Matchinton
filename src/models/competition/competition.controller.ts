@@ -14,11 +14,11 @@ import { UpdateCompetitionDto } from './dto/update-competition.dto';
 import { AdminGuard } from 'src/common/guard/admin.guard';
 
 @Controller('competition')
-@UseGuards(AdminGuard)
 export class CompetitionController {
   constructor(private readonly competitionService: CompetitionService) {}
 
   @Post()
+  @UseGuards(AdminGuard)
   create(@Body() createCompetitionDto: CreateCompetitionDto) {
     return this.competitionService.create(createCompetitionDto);
   }
@@ -34,6 +34,7 @@ export class CompetitionController {
   }
 
   @Patch(':id')
+  @UseGuards(AdminGuard)
   update(
     @Param('id') id: string,
     @Body() updateCompetitionDto: UpdateCompetitionDto,
@@ -42,6 +43,7 @@ export class CompetitionController {
   }
 
   @Delete(':id')
+  @UseGuards(AdminGuard)
   remove(@Param('id') id: string) {
     return this.competitionService.remove(+id);
   }
