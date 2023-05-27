@@ -28,6 +28,7 @@ model category {
   id                   BigInt                 @id @default(autoincrement())
   name                 String
   max_age              Int
+  min_age              Int
   competition_category competition_category[]
 }
 
