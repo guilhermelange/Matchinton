@@ -1,9 +1,10 @@
-import { category } from '@prisma/client';
+import { competition } from '@prisma/client';
 
-export class CompetitionPrisma implements category {
+export class CompetitionPrisma implements competition {
   id: bigint;
   name: string;
-  max_age: number;
+  start_date: Date;
+  end_date: Date;
 }
 
 export class CompetitionDTO {

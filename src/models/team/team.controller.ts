@@ -30,18 +30,12 @@ export class TeamController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Req() request: Request) {
-    const { id: userId } = request.user;
+  findOne(@Param('id') id: string) {
     return this.teamService.findOne(+id);
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTeamDto: UpdateTeamDto,
-    @Req() request: Request,
-  ) {
-    const { id: userId } = request.user;
+  update(@Param('id') id: string, @Body() updateTeamDto: UpdateTeamDto) {
     return this.teamService.update(+id, updateTeamDto);
   }
 

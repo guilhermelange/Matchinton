@@ -2,6 +2,8 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { CreatePlayerDto, SearchPlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PrismaService } from '../../database/prisma';
+import { unlinkSync } from 'fs';
+import { subYears, subDays } from 'date-fns';
 
 @Injectable()
 export class PlayerService {
@@ -97,7 +99,66 @@ export class PlayerService {
     return '';
   }
 
+  async updateImage(id: number, file: Express.Multer.File) {
+    const player = await this.prisma.player.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    console.log(file);
+
+    if (!player) {
+      unlinkSync(`src/../upload/${file.filename}`);
+      throw new HttpException('Jogador não localizado.', 400);
+    }
+
+    const updatedUser = await this.prisma.player.update({
+      where: {
+        id,
+      },
+      data: {
+        photo: file.filename,
+      },
+    });
+
+    return updatedUser;
+  }
+
   async search(searchPlayerDto: SearchPlayerDto) {
+    const dataAtual = new Date();
+    const filterDate = [
+      {
+        birth_date: {
+          gte: subYears(dataAtual, 200),
+          lte: subYears(dataAtual, 1),
+        },
+      },
+    ];
+
+    if (searchPlayerDto.categories) {
+      filterDate.length = 0;
+      const categories = await this.prisma.category.findMany({
+        where: {
+          id: {
+            in: [...searchPlayerDto.categories],
+          },
+        },
+      });
+
+      categories.forEach((category) => {
+        const dataInicial = subYears(dataAtual, category.max_age + 1);
+        const dataFinal = subDays(subYears(dataAtual, category.min_age), 1);
+
+        filterDate.push({
+          birth_date: {
+            gte: dataInicial,
+            lte: dataFinal,
+          },
+        });
+      });
+    }
+
     const players = await this.prisma.player.findMany({
       where: {
         team_id: { not: searchPlayerDto.team_id },
@@ -105,8 +166,10 @@ export class PlayerService {
           contains: searchPlayerDto.name,
           mode: 'insensitive',
         },
+        OR: filterDate,
       },
     });
+
     return players;
   }
 }
