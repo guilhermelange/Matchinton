@@ -106,8 +106,6 @@ export class PlayerService {
       },
     });
 
-    console.log(file);
-
     if (!player) {
       unlinkSync(`src/../upload/${file.filename}`);
       throw new HttpException('Jogador não localizado.', 400);

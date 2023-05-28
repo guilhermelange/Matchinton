@@ -9,18 +9,13 @@ import { CategoryModule } from './models/category/category.module';
 import { CompetitionModule } from './models/competition/competition.module';
 import { TeamModule } from './models/team/team.module';
 import { PlayerModule } from './models/player/player.module';
+import { ImagesModule } from './models/images/images.module';
 import patch from './common/patch';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 @Module({
   imports: [
     ThrottlerModule.forRoot({
       ttl: 60,
-      limit: 10,
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'upload'),
-      serveRoot: '/images',
+      limit: 1000,
     }),
     PrismaModule,
     UserModule,
@@ -29,6 +24,7 @@ import { join } from 'path';
     CompetitionModule,
     TeamModule,
     PlayerModule,
+    ImagesModule,
   ],
   controllers: [],
   providers: [
