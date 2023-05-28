@@ -2,11 +2,9 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { CreatePlayerDto, SearchPlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PrismaService } from '../../database/prisma';
-import { unlinkSync } from 'fs';
+import { unlinkSync, readFileSync } from 'fs';
 import { subYears, subDays } from 'date-fns';
-import { S3, Endpoint } from 'aws-sdk';
-import { env } from 'process';
-import { readFileSync } from 'fs';
+import { S3 } from 'aws-sdk';
 
 @Injectable()
 export class PlayerService {
