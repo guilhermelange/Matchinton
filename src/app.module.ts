@@ -19,7 +19,7 @@ import { join } from 'path';
       limit: 10,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join('upload'),
+      rootPath: join(__dirname, '..', 'upload'),
       serveRoot: '/images',
     }),
     PrismaModule,
