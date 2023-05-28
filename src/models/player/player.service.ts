@@ -2,8 +2,9 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { CreatePlayerDto, SearchPlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PrismaService } from '../../database/prisma';
-import { unlinkSync } from 'fs';
+import { unlinkSync, readFileSync } from 'fs';
 import { subYears, subDays } from 'date-fns';
+import { S3 } from 'aws-sdk';
 
 @Injectable()
 export class PlayerService {
@@ -106,12 +107,18 @@ export class PlayerService {
       },
     });
 
-    console.log(file);
-
     if (!player) {
-      unlinkSync(`src/../upload/${file.filename}`);
+      deleteLocalFile();
       throw new HttpException('Jogador não localizado.', 400);
     }
+
+    const s3 = new S3({
+      endpoint: process.env.DO_SPACES_ENDPOINT,
+      accessKeyId: process.env.DO_SPACES_KEY,
+      secretAccessKey: process.env.DO_SPACES_SECRET,
+    });
+    uploadFileToBucket();
+    deleteLocalFile(true);
 
     const updatedUser = await this.prisma.player.update({
       where: {
@@ -119,10 +126,41 @@ export class PlayerService {
       },
       data: {
         photo: file.filename,
+        updated_at: new Date(),
       },
     });
 
     return updatedUser;
+
+    function deleteLocalFile(deleteBucket = false) {
+      unlinkSync(`src/../upload/${file.filename}`);
+
+      if (deleteBucket) {
+        s3.deleteObject(
+          {
+            Bucket: process.env.DO_SPACES_NAME,
+            Key: player.photo,
+          },
+          () => {
+            // console.log()
+          },
+        );
+      }
+    }
+
+    function uploadFileToBucket() {
+      s3.putObject(
+        {
+          Bucket: process.env.DO_SPACES_NAME,
+          Key: file.filename,
+          Body: readFileSync(file.path),
+          ACL: 'public-read',
+        },
+        (err) => {
+          if (err) return console.log(err);
+        },
+      );
+    }
   }
 
   async search(searchPlayerDto: SearchPlayerDto) {
