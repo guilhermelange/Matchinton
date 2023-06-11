@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:upd": "npx prisma migrate dev --name",
     "prisma:pull": "npx prisma db pull",
+    "prisma:generate": "npx prisma generate",
     "deploy": "npm install && npm run build && npm run start:prod"
   },
   "dependencies": {

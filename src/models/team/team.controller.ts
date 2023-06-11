@@ -29,6 +29,11 @@ export class TeamController {
     return this.teamService.findAll(+userId);
   }
 
+  @Get('/all')
+  findAllGlobal() {
+    return this.teamService.findAllGlobal();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.teamService.findOne(+id);
