@@ -45,7 +45,7 @@ export class WhatsService {
       if (!fone.endsWith('@c.us')) {
         fone += '@c.us';
       }
-      this.client.sendText(fone, createWhatDto.text);
+      await this.client.sendText(fone, createWhatDto.text);
     } catch (error) {
       throw new InternalServerErrorException(
         error.message || 'Erro ao enviar mensagem',
