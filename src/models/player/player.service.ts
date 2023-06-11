@@ -42,6 +42,23 @@ export class PlayerService {
       where: {
         team_id: team_id,
       },
+      select: {
+        birth_date: true,
+        city: true,
+        created_at: true,
+        id: true,
+        name: true,
+        observation: true,
+        photo: true,
+        state: true,
+        team: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        updated_at: true,
+      },
     });
   }
 
@@ -49,6 +66,23 @@ export class PlayerService {
     const player = await this.prisma.player.findUnique({
       where: {
         id,
+      },
+      select: {
+        birth_date: true,
+        city: true,
+        created_at: true,
+        id: true,
+        name: true,
+        observation: true,
+        photo: true,
+        state: true,
+        team: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        updated_at: true,
       },
     });
 
@@ -205,6 +239,23 @@ export class PlayerService {
           mode: 'insensitive',
         },
         OR: filterDate,
+      },
+      select: {
+        birth_date: true,
+        city: true,
+        created_at: true,
+        id: true,
+        name: true,
+        observation: true,
+        photo: true,
+        state: true,
+        team: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        updated_at: true,
       },
     });
 

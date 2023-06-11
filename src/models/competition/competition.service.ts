@@ -39,21 +39,80 @@ export class CompetitionService {
   }
 
   async findAll() {
-    return await this.prisma.competition.findMany();
+    const competition = (await this.prisma.competition.findMany({
+      select: {
+        id: true,
+        name: true,
+        start_date: true,
+        end_date: true,
+        competition_category: {
+          select: {
+            category: {
+              select: {
+                name: true,
+                id: true,
+                max_age: true,
+                min_age: true,
+              },
+            },
+          },
+        },
+      },
+    })) as any;
+
+    const convertedJson = competition.map((item) => {
+      const newItem = { ...item };
+      newItem.competition_category = item.competition_category.map(
+        (category) => ({
+          name: category.category.name,
+          id: category.category.id,
+          max_age: category.category.max_age,
+          min_age: category.category.min_age,
+        }),
+      );
+      return newItem;
+    });
+
+    return convertedJson;
   }
 
   async findOne(id: number) {
-    const competition = await this.prisma.competition.findUnique({
+    const competition = (await this.prisma.competition.findUnique({
       where: {
         id,
       },
-    });
+      select: {
+        id: true,
+        name: true,
+        start_date: true,
+        end_date: true,
+        competition_category: {
+          select: {
+            category: {
+              select: {
+                name: true,
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    })) as any;
 
     if (!competition) {
       throw new HttpException('Competição não localizada.', 400);
     }
 
-    return competition;
+    const newItem = { ...competition };
+    newItem.competition_category = competition.competition_category.map(
+      (category) => ({
+        name: category.category.name,
+        id: category.category.id,
+        max_age: category.category.max_age,
+        min_age: category.category.min_age,
+      }),
+    );
+    return newItem;
   }
 
   async update(id: number, updateCompetitionDto: UpdateCompetitionDto) {

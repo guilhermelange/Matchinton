@@ -36,6 +36,10 @@ export class TeamService {
     });
   }
 
+  async findAllGlobal() {
+    return this.prisma.team.findMany();
+  }
+
   async findOne(id: number) {
     const team = await this.prisma.team.findUnique({
       where: {
