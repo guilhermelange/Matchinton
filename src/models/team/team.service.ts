@@ -36,8 +36,12 @@ export class TeamService {
     });
   }
 
-  async findAllGlobal() {
-    return this.prisma.team.findMany();
+  async findAllGlobal(name: string) {
+    return this.prisma.team.findMany({
+      where: {
+        name: name,
+      },
+    });
   }
 
   async findOne(id: number) {

@@ -12,6 +12,7 @@ import { TeamService } from './team.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { Request } from 'express';
+import { Public } from 'src/common/decorator/public.decorator';
 
 @Controller('team')
 export class TeamController {
@@ -30,8 +31,10 @@ export class TeamController {
   }
 
   @Get('/all')
-  findAllGlobal() {
-    return this.teamService.findAllGlobal();
+  @Public()
+  findAllGlobal(@Req() request: Request) {
+    const { name } = request.query;
+    return this.teamService.findAllGlobal(name as string);
   }
 
   @Get(':id')

@@ -11,6 +11,7 @@ import { TeamModule } from './models/team/team.module';
 import { PlayerModule } from './models/player/player.module';
 import { ImagesModule } from './models/images/images.module';
 import { WhatsModule } from './models/whats/whats.module';
+import { EmailModule } from './models/email/email.module';
 import patch from './common/patch';
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import patch from './common/patch';
     PlayerModule,
     ImagesModule,
     WhatsModule,
+    EmailModule,
   ],
   controllers: [],
   providers: [

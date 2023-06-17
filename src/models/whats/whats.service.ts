@@ -12,7 +12,7 @@ export class WhatsService {
   private client: Whatsapp;
 
   constructor() {
-    this.initialize();
+    // this.initialize();
   }
 
   private initialize() {

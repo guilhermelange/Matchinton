@@ -5,6 +5,7 @@ export class UserPrisma implements User {
   username: string;
   password: string;
   phone: string;
+  email: string;
   type: UserType;
   created_at: Date;
   updated_at: Date;
