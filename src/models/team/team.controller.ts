@@ -19,6 +19,7 @@ export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 
   @Post()
+  @Public()
   create(@Body() createTeamDto: CreateTeamDto, @Req() request: Request) {
     const { id: userId } = request.user;
     return this.teamService.create(createTeamDto, +userId);
