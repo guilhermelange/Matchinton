@@ -1,4 +1,4 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { PrismaService } from '../../database/prisma';
@@ -7,7 +7,8 @@ import { PrismaService } from '../../database/prisma';
 export class TeamService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createTeamDto: CreateTeamDto, userId: number) {
+  async create(createTeamDto: CreateTeamDto) {
+    const userId = createTeamDto.userId;
     const team = await this.prisma.team.findFirst({
       where: {
         name: createTeamDto.name,
@@ -15,7 +16,7 @@ export class TeamService {
     });
 
     if (team) {
-      throw new HttpException('Time indisponível.', 400);
+      throw new BadRequestException('Time indisponível.');
     }
 
     const newTeam = await this.prisma.team.create({
