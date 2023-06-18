@@ -31,6 +31,7 @@ export class PlayerService {
         photo: createPlayerDto.photo || '',
         state: createPlayerDto.state,
         team_id: createPlayerDto.team_id,
+        gender: createPlayerDto.gender,
       },
     });
 
@@ -51,6 +52,7 @@ export class PlayerService {
         observation: true,
         photo: true,
         state: true,
+        gender: true,
         team: {
           select: {
             id: true,
@@ -76,6 +78,7 @@ export class PlayerService {
         observation: true,
         photo: true,
         state: true,
+        gender: true,
         team: {
           select: {
             id: true,
@@ -249,6 +252,7 @@ export class PlayerService {
         observation: true,
         photo: true,
         state: true,
+        gender: true,
         team: {
           select: {
             id: true,

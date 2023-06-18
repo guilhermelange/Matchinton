@@ -18,7 +18,6 @@ model User {
   type                   UserType                 @default(USER)
   created_at             DateTime                 @default(now()) @db.Timestamp(6)
   updated_at             DateTime                 @default(now()) @db.Timestamp(6)
-  duo_request_candidates duo_request_candidates[]
   team                   team[]
   user_team              user_team[]
 
@@ -39,6 +38,7 @@ model competition {
   start_date           DateTime               @db.Date
   end_date             DateTime               @db.Date
   competition_category competition_category[]
+  type                 requesttype            @default(MIS)
 }
 
 model competition_category {
@@ -55,18 +55,8 @@ model duo_request {
   player2                BigInt
   category_id            BigInt
   competition_id         BigInt
-  status                 Int
+  status                 RequestStatus
   type                   requesttype
-  duo_request_candidates duo_request_candidates[]
-}
-
-model duo_request_candidates {
-  request_id  BigInt
-  user_id     BigInt
-  duo_request duo_request @relation(fields: [request_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user        User        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([request_id, user_id])
 }
 
 model player {
@@ -78,6 +68,7 @@ model player {
   city        String
   state       String
   team_id     BigInt
+  gender      UserGender @default(MAS)
   created_at  DateTime @default(now()) @db.Timestamp(6)
   updated_at  DateTime @default(now()) @db.Timestamp(6)
   team        team     @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -106,8 +97,22 @@ enum UserType {
   ADMIN
 }
 
+enum UserGender {
+  MAS
+  FEM
+}
+
 enum requesttype {
   MAS
   FEM
   MIS
+}
+
+// Pendente, Aceito (Resposta ok), Negado (Resposta Negativa), Cancelado (Requisitante cancela), Desconsiderado (Automático)
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  DENIED
+  CANCELED
+  DISREGARDED
 }

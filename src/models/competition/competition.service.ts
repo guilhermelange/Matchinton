@@ -22,6 +22,7 @@ export class CompetitionService {
       end_date: new Date(createCompetitionDto.end_date),
       name: createCompetitionDto.name,
       start_date: new Date(createCompetitionDto.start_date),
+      type: createCompetitionDto.type,
       competition_category: {
         create: createCompetitionDto.categories.map((item) => {
           return { category_id: item };
@@ -45,6 +46,7 @@ export class CompetitionService {
         name: true,
         start_date: true,
         end_date: true,
+        type: true,
         competition_category: {
           select: {
             category: {
@@ -86,12 +88,15 @@ export class CompetitionService {
         name: true,
         start_date: true,
         end_date: true,
+        type: true,
         competition_category: {
           select: {
             category: {
               select: {
                 name: true,
                 id: true,
+                max_age: true,
+                min_age: true,
               },
             },
           },
@@ -134,6 +139,7 @@ export class CompetitionService {
         name: updateCompetitionDto.name,
         end_date: updateCompetitionDto.end_date,
         start_date: updateCompetitionDto.start_date,
+        type: updateCompetitionDto.type,
       },
     });
 
