@@ -53,10 +53,8 @@ model duo_request {
   id                     BigInt                   @id @default(autoincrement())
   player1                BigInt
   player2                BigInt
-  category_id            BigInt
   competition_id         BigInt
   status                 RequestStatus
-  type                   requesttype
 }
 
 model player {
