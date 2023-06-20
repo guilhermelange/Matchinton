@@ -9,17 +9,17 @@ datasource db {
 }
 
 model User {
-  id                     BigInt                   @id @default(autoincrement())
-  name                   String
-  username               String
-  password               String
-  phone                  String
-  email                  String                   @default("")
-  type                   UserType                 @default(USER)
-  created_at             DateTime                 @default(now()) @db.Timestamp(6)
-  updated_at             DateTime                 @default(now()) @db.Timestamp(6)
-  team                   team[]
-  user_team              user_team[]
+  id         BigInt      @id @default(autoincrement())
+  name       String
+  username   String
+  password   String
+  phone      String
+  type       UserType    @default(USER)
+  created_at DateTime    @default(now()) @db.Timestamp(6)
+  updated_at DateTime    @default(now()) @db.Timestamp(6)
+  email      String      @default("")
+  team       team[]
+  user_team  user_team[]
 
   @@map("user")
 }
@@ -37,39 +37,45 @@ model competition {
   name                 String
   start_date           DateTime               @db.Date
   end_date             DateTime               @db.Date
-  competition_category competition_category[]
   type                 requesttype            @default(MIS)
+  competition_category competition_category[]
+  duo_request          duo_request[]
 }
 
 model competition_category {
-  id             BigInt                 @id @default(autoincrement())
   category_id    BigInt
   competition_id BigInt
+  id             BigInt      @id @default(autoincrement())
   category       category    @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   competition    competition @relation(fields: [competition_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model duo_request {
-  id                     BigInt                   @id @default(autoincrement())
-  player1                BigInt
-  player2                BigInt
-  competition_id         BigInt
-  status                 RequestStatus
+  id                                 BigInt        @id @default(autoincrement())
+  player1                            BigInt
+  player2                            BigInt
+  competition_id                     BigInt
+  status                             RequestStatus
+  competition                        competition   @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_competition_duo_request")
+  player_origin                      player        @relation("duo_request_player1Toplayer", fields: [player1], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_player1")
+  player_target                      player        @relation("duo_request_player2Toplayer", fields: [player2], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_player2")
 }
 
 model player {
-  id          BigInt   @id @default(autoincrement())
-  name        String
-  observation String
-  birth_date  DateTime @db.Date
-  photo       String
-  city        String
-  state       String
-  team_id     BigInt
-  gender      UserGender @default(MAS)
-  created_at  DateTime @default(now()) @db.Timestamp(6)
-  updated_at  DateTime @default(now()) @db.Timestamp(6)
-  team        team     @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                                      BigInt        @id @default(autoincrement())
+  name                                    String
+  observation                             String
+  birth_date                              DateTime      @db.Date
+  photo                                   String
+  city                                    String
+  state                                   String
+  team_id                                 BigInt
+  created_at                              DateTime      @default(now()) @db.Timestamp(6)
+  updated_at                              DateTime      @default(now()) @db.Timestamp(6)
+  gender                                  UserGender    @default(MAS)
+  duo_requests                            duo_request[] @relation("duo_request_player1Toplayer")
+  duo_requests_target                     duo_request[] @relation("duo_request_player2Toplayer")
+  team                                    team          @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model team {
@@ -106,7 +112,6 @@ enum requesttype {
   MIS
 }
 
-// Pendente, Aceito (Resposta ok), Negado (Resposta Negativa), Cancelado (Requisitante cancela), Desconsiderado (Automático)
 enum RequestStatus {
   PENDING
   ACCEPTED
