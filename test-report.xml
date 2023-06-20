@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="C:\Users\guilu\OneDrive\Área de Trabalho\matchinton\matchinton\src\models\user\user.service.spec.ts">
-    <testCase name="UserService should be defined" duration="19"/>
+  <file path="C:\Users\guilu\OneDrive\Área de Trabalho\matchinton\matchinton-real\src\models\user\user.service.spec.ts">
+    <testCase name="UserService should be defined" duration="30"/>
+    <testCase name="UserService create should create a new todo entity item successfully" duration="45"/>
+    <testCase name="UserService create should throw an exception" duration="14"/>
+    <testCase name="UserService update should update a user successfully" duration="8"/>
+    <testCase name="UserService update should throw a not found exception" duration="7"/>
+    <testCase name="UserService remove should delete a user successfully" duration="7"/>
+    <testCase name="UserService remove should throw a not found exception" duration="9"/>
   </file>
-  <file path="C:\Users\guilu\OneDrive\Área de Trabalho\matchinton\matchinton\src\models\user\user.controller.spec.ts">
-    <testCase name="UserController should be defined" duration="17"/>
+  <file path="C:\Users\guilu\OneDrive\Área de Trabalho\matchinton\matchinton-real\src\models\user\user.controller.spec.ts">
+    <testCase name="UserController should be defined" duration="26"/>
+    <testCase name="UserController create should create user and return without password" duration="9"/>
+    <testCase name="UserController create should throw an exception for bad request" duration="16"/>
+    <testCase name="UserController update should update a user successfully" duration="6"/>
+    <testCase name="UserController update should throw an exception" duration="6"/>
+    <testCase name="UserController delete should remove a user successfully" duration="5"/>
+    <testCase name="UserController delete should throw an exception" duration="6"/>
   </file>
 </testExecutions>
