@@ -4,7 +4,7 @@ import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class EmailService {
-  async send(createEmailDto: CreateEmailDto) {
+  public async send(createEmailDto: CreateEmailDto) {
     const mailOptions = {
       from: 'Matchinton',
       to: createEmailDto.to,
