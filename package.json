@@ -21,7 +21,7 @@
     "prisma:upd": "npx prisma migrate dev --name",
     "prisma:pull": "npx prisma db pull",
     "prisma:generate": "npx prisma generate",
-    "deploy": "npm install && npm run build && npm run start:prod"
+    "deploy": "npm install && npx prisma generate && npm run build && npm run start:prod"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
