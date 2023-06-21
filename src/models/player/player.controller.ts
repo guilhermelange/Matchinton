@@ -14,7 +14,7 @@ import { CreatePlayerDto, SearchPlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import multerConfig from 'src/common/storage/multer.config';
+import multerConfig from '../../common/storage/multer.config';
 
 @Controller('player')
 export class PlayerController {
