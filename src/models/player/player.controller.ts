@@ -43,7 +43,7 @@ export class PlayerController {
     return this.playerService.findAll(+team_id);
   }
 
-  @Get('search')
+  @Post('search')
   search(@Body() searchPlayerDto: SearchPlayerDto) {
     return this.playerService.search(searchPlayerDto);
   }
