@@ -69,6 +69,11 @@ export class DuoRequestService {
             id: true,
             name: true,
             gender: true,
+            birth_date: true,
+            city: true,
+            state: true,
+            photo: true,
+            team_id: true,
             team: {
               select: {
                 id: true,
@@ -82,6 +87,11 @@ export class DuoRequestService {
             id: true,
             name: true,
             gender: true,
+            birth_date: true,
+            city: true,
+            state: true,
+            photo: true,
+            team_id: true,
             team: {
               select: {
                 id: true,
