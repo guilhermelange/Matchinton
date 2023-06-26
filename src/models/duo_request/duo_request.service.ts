@@ -263,11 +263,13 @@ export class DuoRequestService {
           ? '<span style="color: green; font-weight: bold;">Aceita</span>'
           : '<span style="color: red; font-weight: bold;">Rejeitada</span>';
 
-      this.emailService.send({
-        to: usersTeam.user.email,
-        subject: 'Alteração de Status de Requisição',
-        message: `Olá <strong>${usersTeam.user.name}</strong><br><br>&nbsp;&nbsp;A requisição realizada de <strong>${duoRequest.player_origin.name}</strong> para <strong>${duoRequest.player_target.name}</strong> foi ${statusText}!${EMAIL_SUBSCRIPTION}`,
-      });
+      try {
+        this.emailService.send({
+          to: usersTeam.user.email,
+          subject: 'Alteração de Status de Requisição',
+          message: `Olá <strong>${usersTeam.user.name}</strong><br><br>&nbsp;&nbsp;A requisição realizada de <strong>${duoRequest.player_origin.name}</strong> para <strong>${duoRequest.player_target.name}</strong> foi ${statusText}!${EMAIL_SUBSCRIPTION}`,
+        });
+      } catch (error) {}
     }
 
     return await this.prisma.duo_request.update({
